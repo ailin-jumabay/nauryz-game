@@ -4,11 +4,12 @@
 #include "qyzquu.h"
 
 void printRace(int playerPos, int opponentPos) {
+    printf("\n");
     for (int i = 0; i < DISTANCE; i++) {
         if (i == playerPos) {
-            printf("@");  // Игрок
+            printf("@");  
         } else if (i == opponentPos) {
-            printf("0");  // Противник
+            printf("0");  
         } else {
             printf("-");
         }
@@ -18,12 +19,12 @@ void printRace(int playerPos, int opponentPos) {
 
 int getPlayerMove() {
     int move;
-    printf("enter your move (1-5 steps): ");
+    printf("\nenter your move (1-5 steps): \n");
     scanf("%d", &move);
 
     
-    if (move <= 1 || move >= 5) {
-        printf("Invalid move! Please enter a number between 1 and 5.\n");
+    if (move < 1 || move > 5) {
+        printf("invalid move! enter a number between 1 and 5\n");
         return getPlayerMove();  
     }
     return move;
@@ -36,16 +37,29 @@ int getOpponentMove() {
 void playQyzQuu() {
     srand(time(NULL));  
 
-    printf("salem! loading Qyz Quu...\n");
+    printf("\nsalem! loading Qyz Quu...\n");
+    printf("\nrules: you have a distance of 30 meters where you are horse racing \nwith the character of opposite gender. girl is running from and boy is catching. \ngirl has a head start advantage of 3 meters. \n \n*if boy catches girl, he can kiss her on the cheek\n \n*if girl escapes, she can hit him with a whip\n");
 
     int characterChoice;
-    printf("Choose your character:\n");
-    printf("1. Boy (You chase the girl)\n");
-    printf("2. Girl (You run from the boy)\n");
+    printf("\nchoose your character:\n");
+    printf("\n1. boy (you chase the girl)\n");
+    printf("\n2. girl (you run from the boy)\n");
     scanf("%d", &characterChoice);
+    int playerPos, opponentPos;
 
-    int playerPos = 0;   
-    int opponentPos = 0; 
+    if (characterChoice == 1) {
+        
+        playerPos = 0;
+        opponentPos = 3;
+    } else if (characterChoice == 2) {
+        
+        playerPos = 3;      
+        opponentPos = 0;
+    } else {
+        printf("\ninvalid character choice!\n");
+        return;
+    }
+    
     int gameOver = 0;
     extern int gameFinished;
     
@@ -55,24 +69,35 @@ void playQyzQuu() {
 
     while (!gameOver) {
         printRace(playerPos, opponentPos); 
-
-        
+    
         int playerMove = getPlayerMove();
         playerPos += playerMove;  
-
-        
+    
         int opponentMove = getOpponentMove();
         opponentPos += opponentMove;  
-
+    
         
-        if (boy && playerPos >= opponentPos) {  
+        if (boy && playerPos >= opponentPos) {
+            printf("\ngame over! you caught the girl.\n");
             gameOver = 1;
-            printf("Game Over! The boy caught the girl.\n");
             gameFinished = 1;
-        } else if (girl && opponentPos >= playerPos) {  
+        }
+        
+        else if (girl && opponentPos >= playerPos) {
+            printf("\ngame over! you got caught.\n");
             gameOver = 1;
-            printf("Congratulations! The girl escaped from the boy. \n");
             gameFinished = 1;
+        }
+        
+        else if (playerPos >= DISTANCE || opponentPos >= DISTANCE) {
+            gameOver = 1;
+            gameFinished = 1;
+            if (girl) {
+                printf("\ncongratulations! you escaped to the finish line!\n");
+            } else if (boy) {
+                printf("\ntoo bad! the boy couldn't catch the girl in time.\n");
+            }
+        
         }
 
         if (playerPos >= DISTANCE || opponentPos >= DISTANCE) {

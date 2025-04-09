@@ -8,15 +8,11 @@ int gameFinished = 0;
 
 void displayMenu() {
     printf("\n");
-    printf("let's celebrate nauryz together! what do you want to play?\n");
-    printf("\n");
     printf("1. play Qyz Quu\n");
     printf("2. play Asyq Atu\n");
     printf("3. play 'Otbasym' hangman\n");
     printf("4. exit\n");
-    printf("\n");
-    printf("please enter your choice: ");
-    printf("\n");
+    printf("\nplease enter your choice: ");
 }
 
 
@@ -25,50 +21,62 @@ int main() {
     int keepPlaying = 1;  
 
     char celebrate;
-    printf("do you want to celebrate nauryz? (Y/N): ");
-    scanf(" %c", &celebrate);  // Добавлен пробел перед %c для корректной работы с буфером
 
-    if (celebrate == 'N' || celebrate == 'n') {
-        printf("\n");
-        printf("okay :( maybe next year... sau bol!\n");
-        return 0;  
-    }
-
-    while (keepPlaying) {
-        
-        displayMenu();
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                playQyzQuu();
-                break;
-            case 2:
-                printf("salem! loading Asyq Atu...\n");
-                printf("rules: you need to \n");
-                playAsyq();
-                break;
-            case 3:
-                printf("salem! loading 'Otbasym' hangman...\n");
-                printf("rules: guess the term for qazaq family member!\n");
-                playHangman();
-                break;
-            case 4:
-                printf("raqmet for playing! sau bol!\n");
-                keepPlaying = 0;  
-                break;
-            default:
-                printf("invalid choice\n");
+        while (1) {
+            printf("\ndo you want to celebrate nauryz? (Y/N): ");
+            scanf(" %c", &celebrate);  
+            if (celebrate == 'N' || celebrate == 'n') {
+                printf("\nokay :( maybe next year... sau bol!\n");
+                return 0;  
+            } 
+            else if (celebrate == 'Y' || celebrate == 'y') {
+                printf("\nlet's celebrate nauryz together! what do you want to play?\n");
+                break;  
+            } 
+            else {
+                printf("invalid input! please enter Y or N.\n");
+            }
         }
 
-        if (gameFinished) {
-            printf("\ndo you want to play again? (1 for yes, 0 for no): ");
-            int playAgain;
-            scanf("%d", &playAgain);
-            if (playAgain == 0) {
-                keepPlaying = 0;
-                printf("raqmet for playing! sau bol!\n");
+        while (keepPlaying) {
+        
+            displayMenu();
+            scanf("%d", &choice);
+    
+            switch (choice) {
+                case 1:
+                    playQyzQuu();
+                    break;
+                case 2:
+                    printf("\n");
+                    printf("salem! loading Asyq Atu...\n");
+                    printf("\nrules: you have a field with 10 *asyqs on certain positions. \n1 of the asyqs is a speciall one, shyq, it's bigger than the rest\nif you hit shyq, you will imidiatelly win! good luck!\n \n*asyq - ankle bone of the back legs of the sheep\n \n*shyq - exit from qazaq\n");
+                    playAsyq();
+                    break;
+                case 3:
+                    printf("\nsalem! loading 'Otbasym' hangman...\n");
+                    printf("\nrules: you have a classic hangman gameplay, \nbut the words you need to guess are terms and names used to describe \na certain member of qazaq family! good luck!\n \n*every word will be showen with definition by the end of the game\n");
+                    playHangman();
+                    break;
+                case 4:
+                    printf("\nraqmet for playing! sau bol!\n");
+                    keepPlaying = 0;
+                    gameFinished = 0;
+                    break;
+                default:
+                    printf("\ninvalid choice\n");
             }
+    
+            if (gameFinished) {
+                printf("\ndo you want to play something again? (1 for yes, 0 for no): ");
+                int playAgain;
+                scanf("%d", &playAgain);
+                if (playAgain == 0) {
+                    keepPlaying = 0;
+                    printf("\nraqmet for playing! sau bol!\n");
+
+    } 
+    
         }
     }
 

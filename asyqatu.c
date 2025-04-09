@@ -4,11 +4,20 @@
 #include "asyqatu.h"
 
 void printField(char field[]) {
+    printf("\n");
+    printf("positions: ");
+    for (int i = 0; i < FIELD_SIZE; i++) {
+        printf("%d ", i + 1);  // display 1-based index
+    }
+    printf("\n");
+
+    printf("field:     ");
     for (int i = 0; i < FIELD_SIZE; i++) {
         printf("%c ", field[i]);
     }
     printf("\n");
 }
+
 
 int throwAsyq(int target, int power) {
     int hitChance, maxDeviation;
@@ -50,17 +59,30 @@ void playAsyq() {
         int target, power;
         if (playerTurn) {
             printf(" \n");
-            printf("choose where to throw asyq (0-9): ");
+            printf("choose where to throw asyq (1-10): ");
             scanf("%d", &target);
+            target -= 1;
             printf(" \n");
             printf("how powerful is your throw going to be? (1 - weak, 2 - average, 3 - strong): ");
             scanf("%d", &power);
             printf(" \n");
         } else {
-            target = rand() % FIELD_SIZE;
+            int validTargets[FIELD_SIZE];
+            int count = 0;
+            for (int i = 0; i < FIELD_SIZE; i++) {
+                if (field[i] == 'A' || field[i] == 'S') {
+                    validTargets[count++] = i;
+                }
+            }
+            if (count > 0) {
+                target = validTargets[rand() % count];
+            } else {
+                target = rand() % FIELD_SIZE;  
+            }
+
             power = rand() % 3 + 1;
             printf(" \n");
-            printf("your opponent chose to throw on position %d with power %d\n", target, power);
+            printf("your opponent chose to throw on position %d with power %d\n", target+1, power);
             printf(" \n");
         }
 
@@ -68,17 +90,17 @@ void playAsyq() {
 
         if (field[result] == 'S') {
             if (playerTurn) {
-                printf("congatulations! you hit shik(S)!\n");
+                printf("congatulations! you hit shyq(S)!\n");
                 printf(" \n");
                 playerScore += 50;
             } else {
-                printf("your opponent hit shik(S)!\n");
+                printf("your opponent hit shyq(S)!\n");
                 printf(" \n");
                 botScore += 50;
             }
             break;
         } else if (field[result] == 'A') {
-            printf("hit an asyq on the position %d\n", result);
+            printf("hit an asyq on the position %d\n", result+1);
             printf(" \n");
             field[result] = '_';
             if (playerTurn) playerScore += 10;

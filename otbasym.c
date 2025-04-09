@@ -59,7 +59,7 @@ char* getDefinition(char *word) {
 
 void displayGame(char *word, char *guessed, int triesLeft) {
     printf("\nguessed letters: %s\n", guessed);
-    printf("attempts left: %d\n", triesLeft);
+    printf("\nattempts left: %d\n", triesLeft);
     
     for (int i = 0; i < strlen(word); i++) {
         if (strchr(guessed, word[i])) {
@@ -89,16 +89,16 @@ void playHangman() {
         scanf(" %c", &guess);
 
         if (strchr(guessed, guess)) {
-            printf("u already guessed this one\n");
+            printf("u already this one\n");
             continue;
         }
 
         strncat(guessed, &guess, 1);
 
         if (strchr(word, guess)) {
-            printf("yes! '%c' letter is there\n", guess);
+            printf("\nyes! '%c' letter is there\n", guess);
         } else {
-            printf("no! '%c' letter is not there\n", guess);
+            printf("\nno! '%c' letter is not there\n", guess);
             triesLeft--;
         }
 
@@ -118,7 +118,7 @@ void playHangman() {
         printf("\ncongratulations! you gueesed the word: %s\n", word);
         gameFinished = 1;
         char *definition = getDefinition(word);
-        printf("definition: %s\n", definition);
+        printf("\ndefinition: %s\n", definition);
         free(definition);
     } else {
         printf("\ngame over! word was: %s\n", word);
