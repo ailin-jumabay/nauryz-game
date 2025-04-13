@@ -11,7 +11,8 @@ void printRace(int playerPos, int opponentPos) {
         } else if (i == opponentPos) {
             printf("0");  
         } else {
-            printf("-");
+            printf("-"); //here gors the printing of race itself
+            // users signs and distance itself
         }
     }
     printf("\n");
@@ -31,7 +32,7 @@ int getPlayerMove() {
 }
 
 int getOpponentMove() {
-    return rand() % 10;  
+    return rand() % 10;  //randomizing opponents move 
 }
 
 void playQyzQuu() {
@@ -45,7 +46,7 @@ void playQyzQuu() {
     printf("\nchoose your character:\n");
     printf("\n1. boy (you chase the girl)\n");
     printf("\n2. girl (you run from the boy)\n");
-    scanf("%d", &characterChoice);
+    scanf("%d", &characterChoice); //choice of characters
     
     if (characterChoice != 1 && characterChoice != 2) {
         printf("invalid character choice! please try again.\n");
@@ -62,7 +63,7 @@ void playQyzQuu() {
         
         playerPos = 3;      
         opponentPos = 0;
-    } 
+    } //gives head start to a girl
     
     int gameOver = 0;
     extern int gameFinished;
@@ -79,7 +80,7 @@ void playQyzQuu() {
     
         int opponentMove = getOpponentMove();
         opponentPos += opponentMove;  
-    
+        //updates position after every move
         
         if (boy && playerPos >= opponentPos) {
             printf("\ngame over! you caught the girl.\n");
@@ -107,6 +108,6 @@ void playQyzQuu() {
         if (playerPos >= DISTANCE || opponentPos >= DISTANCE) {
             gameOver = 1;
             gameFinished = 1;
-        }
+        } //if characters made to the end of distance without catching 
     }
 }

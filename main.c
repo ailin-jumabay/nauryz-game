@@ -8,7 +8,7 @@
 
 int gameFinished = 0;
 
-void displayMenu() {
+void displayMenu() { //display menu function
     printf("\n");
     printf("1. play Qyz Quu\n");
     printf("2. play Asyq Atu\n");
@@ -16,10 +16,6 @@ void displayMenu() {
     printf("4. exit\n");
     printf("\nplease enter your choice: ");
 }
-
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
 
 int main() {
     int choice;
@@ -33,18 +29,21 @@ int main() {
         if (fgets(input, sizeof(input), stdin)) {
             size_t len = strlen(input);
 
-            
-            if (input[len - 1] == '\n') {
+            // it removes the newline character at the end of the input, if present
+            // fgets() includes the '\n' when the user presses enter
+            // and replaces '\n' with '\0' to clean up the input string
+            if (input[len - 1] == '\n') { 
                 input[len - 1] = '\0';
                 len--;
             }
 
             if (len != 1) {
                 printf("invalid input! please enter only one letter (Y or N).\n");
-                continue;
+                continue; //if length is more than 1 symbol it throws invalid value 
+                //and continues code so it asks again
             }
 
-            celebrate = tolower(input[0]);
+            celebrate = tolower(input[0]); //lower or upper case blindness
 
             if (celebrate == 'n') {
                 printf("\nokay :( maybe next year... sau bol!\n");
@@ -87,15 +86,15 @@ int main() {
                 break;
             default:
                 printf("\ninvalid choice\n");
-        }
+        } //choice of game
 
         if (gameFinished) {
             printf("\ndo you want to play something again? (1 for yes, 0 for no): ");
             int playAgain;
-            scanf("%d", &playAgain);
+            scanf("%d", &playAgain); //shows menu again if user wants to play again
             if (playAgain == 0) {
                 keepPlaying = 0;
-                printf("\nraqmet for playing! sau bol!\n");
+                printf("\nraqmet for playing! sau bol!\n"); //if no code ends
 
 } 
 

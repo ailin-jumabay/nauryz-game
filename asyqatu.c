@@ -15,13 +15,14 @@ void printField(char field[]) {
     for (int i = 0; i < FIELD_SIZE; i++) {
         printf("%c ", field[i]);
     }
-    printf("\n");
+    printf("\n"); // prints field for visualisation
 }
 
 
 int throwAsyq(int target, int power) {
     int hitChance, maxDeviation;
 
+    // sets hit chance and maximum deviation based on throw power
     if (power == 1) {
         hitChance = HIT_CHANCE_1;
         maxDeviation = 1;
@@ -33,12 +34,15 @@ int throwAsyq(int target, int power) {
         maxDeviation = 3;
     }
 
-    int chance = rand() % 100;
+    int chance = rand() % 100; //simulating hit chance by randomizing
+     // if the random chance is less than hitChance, it hits the target
+    // otherwise, deviates by a random value within [-maxDeviation, +maxDeviation]
     int result = (chance < hitChance) ? target : target + (rand() % (2 * maxDeviation + 1) - maxDeviation);
 
     int wind = rand() % 3 - 1;
-    result += wind;
+    result += wind; //wind effect
 
+    // clamps result to stay within valid field bounds
     if (result < 0) result = 0;
     if (result >= FIELD_SIZE) result = FIELD_SIZE - 1;
 
@@ -48,7 +52,7 @@ int throwAsyq(int target, int power) {
 void playAsyq() {
     srand(time(NULL));
 
-    char field[FIELD_SIZE] = {'A', '_', 'A', '_', 'A', 'S', '_', 'A', '_', '_'};
+    char field[FIELD_SIZE] = {'A', '_', 'A', '_', 'A', 'S', '_', 'A', '_', '_'}; //field (stays the same)
     int playerTurn = 1;
     int playerScore = 0, botScore = 0;
     extern int gameFinished;
@@ -57,7 +61,7 @@ void playAsyq() {
 
     while (1) {
         int target, power;
-        if (playerTurn) {
+        if (playerTurn) { //if player turn
             printf(" \n");
             do {
                 printf("\nchoose where to throw asyq (1-10): \n");
@@ -66,7 +70,7 @@ void playAsyq() {
                     printf("\ninvalid position! please choose a number between 1 and 10.\n");
                 }
             } while (target < 1 || target > 10);
-            target -= 1;
+            target -= 1; //keeps index as 1 to 10 for user but 0 to 9 for program
             
             do {
                 printf("\nhow powerful is your throw going to be? (1 - weak, 2 - average, 3 - strong): \n");
@@ -77,16 +81,17 @@ void playAsyq() {
             } while (power < 1 || power > 3);
             
             printf(" \n");
-        } else {
+        } else { //generates for opponrnt turn
             int validTargets[FIELD_SIZE];
             int count = 0;
-            for (int i = 0; i < FIELD_SIZE; i++) {
+            for (int i = 0; i < FIELD_SIZE; i++) { //loops through so opponent targets A and S only
                 if (field[i] == 'A' || field[i] == 'S') {
+                    // store valid target index into the array
                     validTargets[count++] = i;
                 }
             }
             if (count > 0) {
-                target = validTargets[rand() % count];
+                target = validTargets[rand() % count]; //choose randomly one of asyqs
             } else {
                 target = rand() % FIELD_SIZE;  
             }
@@ -120,7 +125,7 @@ void playAsyq() {
             printf("miss :(\n");
             printf(" \n");
         }
-        
+        //keep track on hits and misses and counts points as well
         printf("score: you - %d,  opponent - %d\n", playerScore, botScore);
 
         playerTurn = !playerTurn;

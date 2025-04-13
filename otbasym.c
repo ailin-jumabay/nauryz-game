@@ -93,7 +93,7 @@ void playHangman() {
             scanf("%s", input);
 
             if (strlen(input) != 1 || !((input[0] >= 'a' && input[0] <= 'z') || (input[0] >= 'A' && input[0] <= 'Z'))) {
-                printf("invalid input! please enter a single letter (a-z).\n");
+                printf("invalid input! please enter a single letter (a-z)\n");
                 continue;
             }
 
