@@ -59,12 +59,23 @@ void playAsyq() {
         int target, power;
         if (playerTurn) {
             printf(" \n");
-            printf("choose where to throw asyq (1-10): ");
-            scanf("%d", &target);
+            do {
+                printf("\nchoose where to throw asyq (1-10): \n");
+                scanf("%d", &target);
+                if (target < 1 || target > 10) {
+                    printf("\ninvalid position! please choose a number between 1 and 10.\n");
+                }
+            } while (target < 1 || target > 10);
             target -= 1;
-            printf(" \n");
-            printf("how powerful is your throw going to be? (1 - weak, 2 - average, 3 - strong): ");
-            scanf("%d", &power);
+            
+            do {
+                printf("\nhow powerful is your throw going to be? (1 - weak, 2 - average, 3 - strong): \n");
+                scanf("%d", &power);
+                if (power < 1 || power > 3) {
+                    printf("\ninvalid power! please choose 1, 2, or 3.\n");
+                }
+            } while (power < 1 || power > 3);
+            
             printf(" \n");
         } else {
             int validTargets[FIELD_SIZE];

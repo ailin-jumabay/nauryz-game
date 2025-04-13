@@ -84,14 +84,30 @@ void playHangman() {
     while (triesLeft > 0) {
         displayGame(word, guessed, triesLeft);
 
+        char input[100];
         char guess;
-        printf("enter your letter: ");
-        scanf(" %c", &guess);
+        int validInput = 0;
 
-        if (strchr(guessed, guess)) {
-            printf("u already this one\n");
-            continue;
-        }
+        do {
+            printf("enter your letter: ");
+            scanf("%s", input);
+
+            if (strlen(input) != 1 || !((input[0] >= 'a' && input[0] <= 'z') || (input[0] >= 'A' && input[0] <= 'Z'))) {
+                printf("invalid input! please enter a single letter (a-z).\n");
+                continue;
+            }
+
+            guess = input[0];
+
+            if (strchr(guessed, guess)) {
+                printf("you already guessed '%c'\n", guess);
+                continue;
+            }
+
+            validInput = 1;
+        } while (!validInput);
+
+
 
         strncat(guessed, &guess, 1);
 

@@ -41,10 +41,17 @@ void playQyzQuu() {
     printf("\nrules: you have a distance of 30 meters where you are horse racing \nwith the character of opposite gender. girl is running from and boy is catching. \ngirl has a head start advantage of 3 meters. \n \n*if boy catches girl, he can kiss her on the cheek\n \n*if girl escapes, she can hit him with a whip\n");
 
     int characterChoice;
+    do {
     printf("\nchoose your character:\n");
     printf("\n1. boy (you chase the girl)\n");
     printf("\n2. girl (you run from the boy)\n");
     scanf("%d", &characterChoice);
+    
+    if (characterChoice != 1 && characterChoice != 2) {
+        printf("invalid character choice! please try again.\n");
+    }
+    } while (characterChoice != 1 && characterChoice != 2);
+    
     int playerPos, opponentPos;
 
     if (characterChoice == 1) {
@@ -55,10 +62,7 @@ void playQyzQuu() {
         
         playerPos = 3;      
         opponentPos = 0;
-    } else {
-        printf("\ninvalid character choice!\n");
-        return;
-    }
+    } 
     
     int gameOver = 0;
     extern int gameFinished;
